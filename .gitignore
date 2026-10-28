@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Environment Variables (حاوی رمز عبور)
+.env
+
+# Database Dump (حاوی اکانت‌ها)
+usptodb.sql
+schema.sql
+
+# Downloaded Files & Profiles (بسیار حجیم)
+_download/
+.browser-profile/
+.browser-profile-firefox/
+captcha/
+
+# Logs & Debug
+*.log
+debug-login-*.png
+
+# OS Files
+.DS_Store
+Thumbs.db

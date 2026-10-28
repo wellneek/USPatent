@@ -1,0 +1,30 @@
+{
+  "name": "uspto-bulk-downloader",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "runner": "ts-node src/runner.ts",
+    "test": "ts-node src/index-test.ts",
+    "build": "tsc -p ."
+  },
+  "dependencies": {
+    "cross-spawn": "^7.0.6",
+    "dotenv": "^16.4.5",
+    "mysql2": "^3.10.0",
+    "otpauth": "^9.4.1",
+    "playwright": "^1.46.0",
+    "playwright-extra": "^4.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "sharp": "^0.35.4",
+    "tesseract.js": "^7.0.0",
+    "tree-kill": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.6",
+    "@types/node": "^20.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  },
+  "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a"
+}

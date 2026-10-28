@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستندات جامع مهندسی - دانلودر خودکار USPTO</title>
+    
+    <!-- فونت فارسی -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- آیکون‌ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- کتابخانه رسم نمودار -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <!-- کتابخانه رنگ‌آمیزی کد -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #3b82f6;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --border: #cbd5e1;
+            --code-bg: #1e293b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.9;
+            font-size: 15px;
+        }
+
+        /* Layout */
+        .wrapper { display: flex; max-width: 1600px; margin: 0 auto; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+            box-shadow: -4px 0 15px rgba(0,0,0,0.03);
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-list { list-style: none; padding: 0; margin: 0; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a {
+            display: block;
+            padding: 0.6rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+        .nav-list a:hover, .nav-list a.active {
+            background: #eff6ff;
+            color: var(--primary);
+            font-weight: 700;
+            transform: translateX(-5px);
+        }
+
+        /* Main Content */
+        .content { flex: 1; padding: 3rem 4rem; background: var(--bg); min-width: 0; }
+
+        /* Chapters & Sections */
+        .chapter { margin-bottom: 4rem; scroll-margin-top: 2rem; }
+        .chapter-title {
+            font-size: 2rem;
+            color: var(--primary);
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section { margin-bottom: 3rem; scroll-margin-top: 2rem; }
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Typography */
+        p { text-align: justify; margin-bottom: 1.5rem; color: var(--text-muted); }
+        ul, ol { color: var(--text-muted); margin-bottom: 1.5rem; padding-right: 1.5rem; }
+        li { margin-bottom: 0.5rem; }
+        strong { color: var(--text-main); }
+
+        /* Code Blocks */
+        pre {
+            direction: ltr;
+            text-align: left;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid #334155;
+            font-size: 0.9rem;
+        }
+        code { font-family: 'Consolas', monospace; }
+
+        /* Diagrams */
+        .diagram-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            overflow-x: auto;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .diagram-caption {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--surface);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td { padding: 1rem; text-align: right; border-bottom: 1px solid var(--border); }
+        th { background: #f1f5f9; color: var(--primary); font-weight: bold; }
+        tr:last-child td { border-bottom: none; }
+
+        /* Alerts */
+        .alert {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-right: 5px solid;
+            background: var(--surface);
+        }
+        .alert-info { border-color: var(--secondary); background: #eff6ff; }
+        .alert-warning { border-color: #f59e0b; background: #fffbeb; }
+        .alert-success { border-color: #10b981; background: #f0fdf4; }
+
+        /* Print Styles */
+        @media print {
+            .sidebar { display: none; }
+            .content { padding: 0; }
+            .chapter { page-break-before: always; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <h2><i class="fa-solid fa-book-bookmark"></i> فهرست مطالب</h2>
+        <ul class="nav-list">
+            <li><a href="#ch1"><i class="fa-solid fa-1"></i> مقدمه و نیازمندی‌ها</a></li>
+            <li><a href="#ch2"><i class="fa-solid fa-2"></i> معماری سیستم</a></li>
+            <li><a href="#ch3"><i class="fa-solid fa-3"></i> طراحی پایگاه داده</a></li>
+            <li><a href="#ch4"><i class="fa-solid fa-4"></i> ماژول‌های اصلی (Core)</a></li>
+            <li><a href="#ch5"><i class="fa-solid fa-5"></i> الگوریتم‌های پیچیده</a></li>
+            <li><a href="#ch6"><i class="fa-solid fa-6"></i> چالش‌های مهندسی</a></li>
+            <li><a href="#ch7"><i class="fa-solid fa-7"></i> استقرار و راه‌اندازی</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        
+        <!-- Chapter 1: Introduction -->
+        <div class="chapter" id="ch1">
+            <h2 class="chapter-title"><i class="fa-solid fa-circle-info"></i> فصل اول: مقدمه و نیازمندی‌ها</h2>
+            
+            <div class="section">
+                <h3 class="section-title">۱-۱. بیان مسئله</h3>
+                <p>
+                    اداره ثبت اختراعات و علائم تجاری ایالات متحده (USPTO) پورتال عظیمی به نام Open Data Portal دارد که در آن میلیون‌ها سند مربوط به اختراعات ثبت‌شده را به صورت فایل‌های PDF و آرشیوهای فشرده (TAR/ZIP) منتشر می‌کند. این فایل‌ها به تفکیک ماه (از سال ۲۰۰۰ تاکنون) دسته‌بندی شده‌اند. 
+                </p>
+                <p>
+                    استخراج دستی این داده‌ها غیرممکن است، زیرا:
+                </p>
+                <ul>
+                    <li>حجم داده‌ها به چندین ترابایت می‌رسد.</li>
+                    <li>سایت USPTO برای دانلود هر فایل از کپچای ریاضی (جمع دو عدد) استفاده می‌کند.</li>
+                    <li>برای دسترسی به لینک‌های دانلود، نیاز به احراز هویت دو مرحله‌ای (2FA) است.</li>
+                    <li>نشست کاربر (Session) در صورت عدم فعالیت طولانی منقضی می‌شود.</li>
+                </ul>
+                <div class="alert alert-info">
+                    <strong>هدف پروژه:</strong> طراحی یک سیستم نرم‌افزاری مقاوم، خودمختار و کراس‌پلتفرم که بتواند به صورت ۲۴ ساعته، لاگین کند، کپچاها را با استفاده از بینایی ماشین (OCR) حل کند، فایل‌ها را پیدا کرده و با مدیریت دقیق خطاها آن‌ها را دانلود کند.
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title">۱-۲. نیازمندی‌های کارکردی (Functional Requirements)</h3>
+                <table>
+                    <tr><th>شناسه</th><th>نیازمندی</th><th>توضیح</th></tr>
+                    <tr><td>FR-01</td><td>احراز هویت خودکار</td><td>سیستم باید بتواند نام کاربری و رمز عبور را وارد کرده و کد TOTP (2FA) را به صورت خودکار تولید و ارسال کند.</td></tr>
+                    <tr><td>FR-02</td><td>پیمایش صفحات</td><td>سیستم باید بتواند در جدول فایل‌ها (Pagination) جابجا شده و نام و حجم تمام فایل‌ها را استخراج کند.</td></tr>
+                    <tr><td>FR-03</td><td>حل کپچا</td><td>هنگام کلیک روی دانلود، سیستم باید تصویر کپچا را پردازش کرده و جواب آن را در فرم وارد کند.</td></tr>
+                    <tr><td>FR-04</td><td>مدیریت از سرگیری (Resume)</td><td>در صورت قطع شدن برنامه، پس از اجرای مجدد، نباید فایل‌های دانلود شده دوباره دریافت شوند.</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Chapter 2: Architecture -->
+        <div class="chapter" id="ch2">
+            <h2 class="chapter-title"><i class="fa-solid fa-sitemap"></i> فصل دوم: معماری سیستم</h2>
+            
+            <p>معماری این پروژه بر اساس الگوهای <strong>Layered Architecture</strong> و <strong>Supervisor Pattern</strong> طراحی شده است تا از بروز خطاهای مرگبار جلوگیری کند.</p>
+
+            <div class="diagram-box">
+                <div class="mermaid">
+                    graph TD
+                        subgraph OS ["سیستم‌عامل (OS)"]
+                            PM2["PM2 / Cron (Linux)"]
+                            Shell["Command Line / Runner"]
+                        end
+                        
+                        subgraph Supervisor ["لایه نظارت (Supervisor Layer)"]
+                            Runner["runner.ts\n(Process Manager)"]
+                        end
+
+                        subgraph Core ["لایه اصلی (Core Layer)"]
+                            Main["index.ts\n(Bootstrap)"]
+                            Orchestrator["JobOrchestrator.ts\n(Business Logic)"]
+                        end
+
+                        subgraph Services ["لایه سرویس‌ها (Service Layer)"]
+                            Auth["AuthService (Okta, OTP)"]
+                            Captcha["CaptchaService (Image Processing)"]
+                            Scanner["ScannerService (DOM Parsing)"]
+                            Download["DownloadService (Stream, Stall Detector)"]
+                        end
+
+                        subgraph Infra ["لایه زیرساخت (Infrastructure)"]
+                            DB[("MySQL Database")]
+                            Browser["Chromium (Playwright)"]
+                            FS["File System"]
+                        end
+
+                        PM2 --> Runner
+                        Runner --> Main
+                        Main --> Orchestrator
+                        Orchestrator --> Auth
+                        Orchestrator --> Scanner
+                        Orchestrator --> Download
+                        Orchestrator --> Captcha
+                        
+                        Auth --> Browser
+                        Scanner --> Browser
+                        Download --> Browser
+                        Download --> FS
+                        Main --> DB
+
+                        classDef sup fill:#fca5a5,stroke:#ef4444,color:#000;
+                        classDef core fill:#93c5fd,stroke:#2563eb,color:#000;
+                        classDef svc fill:#86efac,stroke:#10b981,color:#000;
+                        classDef infra fill:#fde047,stroke:#eab308,color:#000;
+                        
+                        class Runner sup;
+                        class Main,Orchestrator core;
+                        class Auth,Captcha,Scanner,Download svc;
+                        class DB,Browser,FS infra;
+                </div>
+                <div class="diagram-caption">نمودار ۲-۱: معماری لایه‌ای سیستم و ارتباط ماژول‌ها</div>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title">۲-۱. الگوی Supervisor (نظارت و ری‌استارت)</h3>
+                <p>
+                    یکی از مهم‌ترین بخش‌های این پروژه فایل <code>runner.ts</code> است. این فایل به عنوان یک پروسه جداگانه اجرا می‌شود و وظیفه آن اجرای فایل اصلی (<code>index.ts</code>) است. 
+                    سایت USPTO ممکن است به دلایلی مانند به‌روزرسانی، کرش کردن مرورگر Chromium یا محدودیت‌های شبکه، باعث بسته شدن ناگهانی برنامه شود. 
+                    فایل <code>runner.ts</code> با استفاده از یک الگوریتم <strong>Exponential Backoff</strong>، در صورت کرش کردن، پروفایل مرورگر را پاک کرده و برنامه را مجدداً راه‌اندازی می‌کند.
+                </p>
+            </div>
+        </div>
+
+        <!-- Chapter 3: Database -->
+        <div class="chapter" id="ch3">
+            <h2 class="chapter-title"><i class="fa-solid fa-database"></i> فصل سوم: طراحی پایگاه داده</h2>
+            
+            <p>دیتابیس رابطه‌ای (MySQL) قلب تپنده سیستم است. از آنجا که دانلود فایل‌ها ممکن است هفته‌ها طول بکشد، ذخیره وضعیت دقیق هر فایل در دیتابیس الزامی است.</p>
+
+            <div class="diagram-box">
+                <div class="mermaid">
+                    erDiagram
+                        ACCOUNTS {
+                            int id PK
+                            varchar username
+                            varchar password
+                            text 2fa_secret
+                            tinyint is_active
+                        }
+                        URLS {
+                            int id PK
+                            varchar url
+                            int priority
+                            enum status
+                            int files_found_count
+                        }
+                        FILES {
+                            int id PK
+                            int url_id FK
+                            varchar file_name
+                            bigint expected_size_bytes
+                            enum status
+                        }
+                        URL_EVENT_LOGS {
+                            bigint id PK
+                            int url_id FK
+                            int file_id FK
+                            enum level
+                            varchar step
+                            text message
+                        }
+                        
+                        URLS ||--o{ FILES : "contains"
+                        URLS ||--o{ URL_EVENT_LOGS : "logs"
+                        FILES ||--o{ URL_EVENT_LOGS : "logs"
+                </div>
+                <div class="diagram-caption">نمودار ۳-۱: مدل ارتباطی موجودیت‌ها (ERD)</div>
+            </div>
+
+            <h3 class="section-title">۳-۱. تحلیل جداول</h3>
+            <ul>
+                <li><strong>accounts:</strong> اطلاعات ورود را نگه می‌دارد. فیلد <code>2fa_secret</code> بسیار حیاتی است و باید به صورت Base32 (مثل <code>FQDSZUPPTVMVHUMF</code>) ذخیره شود.</li>
+                <li><strong>urls:</strong> لینک‌های ماهانه USPTO. فیلد <code>priority</code> تعیین می‌کند کدام لینک زودتر دانلود شود. فیلد <code>status</code> چرخه عمر (draft → scanning → processing → downloaded) را نشان می‌دهد.</li>
+                <li><strong>files:</strong> نام هر فایل به همراه حجم مورد انتظار (برای بررسی سلامت فایل پس از دانلود) در اینجا ذخیره می‌شود. وضعیت فایل‌ها شامل <code>registered</code>، <code>downloading</code>، <code>failed</code> و <code>downloaded</code> است.</li>
+            </ul>
+        </div>
+
+        <!-- Chapter 4: Core Modules -->
+        <div class="chapter" id="ch4">
+            <h2 class="chapter-title"><i class="fa-solid fa-cubes"></i> فصل چهارم: تحلیل ماژول‌های اصلی</h2>
+
+            <div class="section">
+                <h3 class="section-title">۴-۱. ماژول احراز هویت (AuthService)</h3>
+                <p>فرآیند لاگین در سایت USPTO از طریق سیستم Okta انجام می‌شود که شامل سه مرحله است: ورود ایمیل، ورود پسورد و ورود کد 2FA. چالش اصلی، تولید کد 2FA است. تابع <code>generateTotpCode</code> این کار را انجام می‌دهد:</p>
+                
+<pre><code class="language-typescript">private generateTotpCode(secretOrUri: string | null): string {
+    if (!secretOrUri?.trim()) {
+        throw new Error("No 2fa_secret registered for this account.");
+    }
+    const raw = secretOrUri.trim();
+    let otp: OTPAuth.TOTP | OTPAuth.HOTP;
+
+    // اگر سکرت به صورت لینک کامل (otpauth://) باشد
+    if (raw.startsWith("otpauth://")) {
+        const parsed = OTPAuth.URI.parse(raw);
+        if (!(parsed instanceof OTPAuth.TOTP)) {
+            throw new Error("2fa_secret must be of type TOTP.");
+        }
+        otp = parsed;
+    } else {
+        // اگر سکرت به صورت متن خام (Base32) باشد
+        const cleaned = raw.replace(/[\s-]/g, "").toUpperCase().replace(/=+$/, "");
+        otp = new OTPAuth.TOTP({
+            secret: cleaned,
+            digits: 6,
+            period: 30,
+            algorithm: "SHA1",
+        });
+    }
+    return otp.generate(); // تولید کد ۶ رقمی
+}</code></pre>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title">۴-۲. ماژول دانلود و مانیتورینگ (DownloadMonitor)</h3>
+                <p>
+                    دانلود فایل‌های چند گیگابایتی نیازمند یک سیستم مانیتورینگ است. اگر اینترنت قطع شود، فایل در پوشه موقت باقی می‌ماند و برنامه فکر می‌کند دانلود در حال انجام است. کلاس <code>DownloadMonitor</code> با روش Polling (هر ۳ ثانیه) حجم فایل در حال دانلود را چک می‌کند.
+                </p>
+                <div class="alert alert-warning">
+                    <strong>الگوریتم Stall Detection (تشخیص توقف):</strong> اگر حجم فایل در بازه زمانی ۱۰ دقیقه‌ای تغییری نکند (رشد نکند)، خطای <code>DownloadStalledError</code> پرتاب می‌شود تا فایل به عنوان شکست‌خورده علامت‌گذاری شده و از نو تلاش شود.
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 5: Complex Algorithms -->
+        <div class="chapter" id="ch5">
+            <h2 class="chapter-title"><i class="fa-solid fa-microchip"></i> فصل پنجم: الگوریتم‌های پیچیده</h2>
+
+            <div class="section">
+                <h3 class="section-title">۵-۱. حل کپچای ریاضی با بینایی ماشین (OCR Pipeline)</h3>
+                <p>کپچای سایت USPTO شامل یک عبارت ریاضی است (مثلاً <code>4+5=</code>). ماژول <code>MathOcrSolver</code> با ترکیب دو کتابخانه <code>Sharp</code> (پردازش تصویر) و <code>Tesseract.js</code> (تشخیص کاراکتر) این مسئله را حل می‌کند:</p>
+                
+                <ol>
+                    <li><strong>پیش‌پردازش (Preprocessing):</strong> تصویر کپچا گرفته شده و با استفاده از <code>Sharp</code> به خاکستری (Grayscale) تبدیل می‌شود.</li>
+                    <li><strong>تولید واریانت (Variants):</strong> برای افزایش دقت، از تصویر ۵ نسخه مختلف با آستانه‌های باینری متفاوت (Thresholds: 128, 160, 190, 210) ساخته می‌شود.</li>
+                    <li><strong>OCR:</strong> هر ۵ تصویر به Tesseract داده می‌شود و خروجی متنی آن‌ها گرفته می‌شود.</li>
+                    <li><strong>فیلترینگ Regex:</strong> خروجی‌ها با الگوی <code>/^\d\+\d=?$/</code> بررسی می‌شوند.</li>
+                    <li><strong>رأی‌گیری (Voting):</strong> نتیجه‌ای که بیشترین تکرار را در بین ۵ نسخه داشته باشد (و بالاترین اطمینان را داشته باشد)، به عنوان جواب نهایی انتخاب شده و محاسبه می‌شود.</li>
+                </ol>
+<pre><code class="language-typescript">// نمونه‌ای از تولید واریانت‌های تصویری در MathOcrSolver.ts
+const createBase = () => sharp(png).flatten({ background: "#ffffff" }).grayscale();
+return Promise.all([
+    finish(createBase().normalise()),
+    finish(createBase().normalise().threshold(128)),
+    finish(createBase().normalise().threshold(160)),
+    finish(createBase().normalise().threshold(190)),
+    finish(createBase().normalise().threshold(210)),
+]);</code></pre>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title">۵-۲. مدیریت کش کپچا (Captcha Caching)</h3>
+                <p>
+                    برای صرفه‌جویی در زمان و منابع پردازشی (Tesseract سنگین است)، ماژول <code>captchaCache.ts</code> طراحی شده است. این ماژول تصویر کپچای فعلی را با تصاویر قبلی که با موفقیت حل شده‌اند (ذخیره شده در پوشه <code>captcha/</code>) مقایسه می‌کند. 
+                    مقایسه با استفاده از <strong>همبستگی متقابل نرمال‌شده (NCC)</strong> پیکسل به پیکسل انجام می‌شود. اگر میزان شباهت بالای ۹۳٪ باشد، جواب از کش خوانده می‌شود و OCR اجرا نمی‌شود.
+                </p>
+            </div>
+        </div>
+
+        <!-- Chapter 6: Engineering Challenges -->
+        <div class="chapter" id="ch6">
+            <h2 class="chapter-title"><i class="fa-solid fa-triangle-exclamation"></i> فصل ششم: چالش‌های مهندسی و راه‌حل‌ها</h2>
+
+            <div class="section">
+                <h3 class="section-title">۶-۱. چالش CORS و MIME Type در Playwright</h3>
+                <p>
+                    در حین توسعه، مشاهده شد که سایت USPTO به دلیل تنظیمات امنیتی (CSP و CORS)، اجازه لود شدن اسکریپت‌های داخلی خود را در محیط اتوماسیون نمی‌دهد و خطای <code>Failed to fetch dynamically imported module</code> می‌دهد.
+                </p>
+                <p><strong>راه‌حل:</strong> در فایل <code>index.ts</code>، تنظیمات مرورگر به شکل زیر تغییر کرد:</p>
+<pre><code class="language-typescript">const context = await chromium.launchPersistentContext(config.browserProfileDir, {
+    // ...
+    bypassCSP: true, // نادیده گرفتن Content Security Policy
+    args: [
+        '--disable-web-security', // غیرفعال کردن امنیت CORS
+        '--disable-features=IsolateOrigins,site-per-process',
+        '--disable-blink-features=AutomationControlled', // مخفی کردن ربات بودن
+        '--no-sandbox',
+    ],
+    ignoreDefaultArgs: ['--enable-automation'],
+});</code></pre>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title">۶-۲. مشکل Timeout در حالت networkidle</h3>
+                <p>
+                    سایت USPTO یک اپلیکیشن Angular است که مدام در پس‌زمینه با سرور در ارتباط است (WebSocket, Polling). به همین دلیل، هرگز حالت <code>networkidle</code> رخ نمی‌دهد و دستور <code>page.goto()</code> با خطای Timeout کرش می‌کند.
+                </p>
+                <p><strong>راه‌حل:</strong> تمام دستورات <code>waitForLoadState("networkidle")</code> در کل پروژه (مخصوصاً در <code>JobOrchestrator</code> و <code>AuthService</code>) به <code>waitForLoadState("domcontentloaded")</code> تغییر یافتند تا به محض آماده شدن ساختار HTML، عملیات بعدی انجام شود.</p>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title">۶-۳. چالش اجرای فرآیندها در ویندوز (EINVAL)</h3>
+                <p>
+                    از نسخه Node.js 18.20 به بعد، به دلیل یک آسیب‌پذیری امنیتی، اجرای فایل‌های <code>.cmd</code> (مثل pnpm) با خطای <code>spawn EINVAL</code> مواجه می‌شود. 
+                    برای حل این مشکل در فایل <code>runner.ts</code>، دستور اجرای برنامه به صورت یک رشته واحد (Single String) درآمده و گزینه <code>shell: true</code> به آن اضافه شد تا توسط <code>cmd.exe</code> ویندوز اجرا شود.
+                </p>
+            </div>
+        </div>
+
+        <!-- Chapter 7: Deployment -->
+        <div class="chapter" id="ch7">
+            <h2 class="chapter-title"><i class="fa-solid fa-server"></i> فصل هفتم: استقرار و راه‌اندازی</h2>
+            
+            <div class="section">
+                <h3 class="section-title">۷-۱. استقرار در محیط ویندوز</h3>
+                <p>در ویندوز، نیاز به نصب <code>Node.js</code>، <code>pnpm</code> و <code>MySQL</code> (مثلاً از طریق XAMPP) است. مسیر مرورگر Chrome باید در فایل <code>.env</code> تنظیم شود. سپس با دستور <code>pnpm run runner</code> برنامه اجرا می‌شود.</p>
+                
+                <h3 class="section-title">۷-۲. استقرار در محیط لینوکس (Ubuntu Server)</h3>
+                <p>در سرورهای لینوکس بدون رابط گرافیکی (Headless)، نیازی به نصب مرورگر Chrome نیست. Playwright خودش Chromium را نصب می‌کند. برای اجرای همیشگی در پس‌زمینه، از ابزار <code>PM2</code> استفاده می‌شود:</p>
+<pre><code class="language-bash"># نصب PM2
+sudo npm install -g pm2
+
+# اجرای برنامه در پس‌زمینه
+pm2 start pnpm --name "uspto-bot" -- run runner
+
+# ذخیره تنظیمات برای اجرای خودکار پس از ری‌استارت سرور
+pm2 save
+pm2 startup</code></pre>
+            </div>
+        </div>
+
+        <!-- Updated Date Footer -->
+        <footer style="text-align: center; margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-muted);">
+            <p style="font-size: 1.1rem; font-weight: bold; margin: 0;">تاریخ: ۶ آبان ۱۴۰۵ (۲۸ اکتبر ۲۰۲۶)</p>
+        </footer>
+
+    </main>
+</div>
+
+<script>
+    // راه‌اندازی Mermaid
+    mermaid.initialize({ 
+        startOnLoad: true, 
+        theme: 'default',
+        fontFamily: 'Vazirmatn, sans-serif',
+        flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+    });
+
+    // فعال‌سازی اسکرول اسپای برای منوی کناری
+    document.addEventListener("DOMContentLoaded", () => {
+        const chapters = document.querySelectorAll(".chapter");
+        const navLinks = document.querySelectorAll(".nav-list a");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            chapters.forEach((chapter) => {
+                const chapterTop = chapter.offsetTop;
+                if (scrollY >= chapterTop - 200) {
+                    current = chapter.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

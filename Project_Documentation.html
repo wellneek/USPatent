@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستندات جامع پروژه USPTO Downloader</title>
+    <!-- فونت فارسی -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- آیکون‌ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- کتابخانه رسم نمودار -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            padding: 2rem 1rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-list li a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-list li a:hover, .nav-list li a.active {
+            background: #e0e7ff;
+            color: var(--primary-dark);
+            font-weight: bold;
+        }
+
+        .nav-list li a i {
+            margin-left: 0.5rem;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            padding: 3rem;
+            background: var(--bg);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 3rem;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+        }
+
+        .header h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .student-info {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .student-info div {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .card h2 {
+            color: var(--primary-dark);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .card h3 {
+            color: var(--text-main);
+            margin-top: 1.5rem;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+
+        /* Code Blocks */
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+        }
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+
+        /* Diagrams */
+        .diagram-container {
+            background: var(--surface);
+            border: 1px dashed var(--primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; border-left: none; border-bottom: 1px solid var(--border); }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        /* Alert Boxes */
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-right: 4px solid;
+        }
+        .alert-info { background: #eff6ff; border-color: var(--primary); }
+        .alert-warning { background: #fffbeb; border-color: var(--warning); }
+        .alert-success { background: #f0fdf4; border-color: var(--success); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <h2><i class="fa-solid fa-book-open"></i> فهرست مطالب</h2>
+        <ul class="nav-list">
+            <li><a href="#overview"><i class="fa-solid fa-circle-info"></i> معرفی پروژه</a></li>
+            <li><a href="#architecture"><i class="fa-solid fa-sitemap"></i> معماری سیستم</a></li>
+            <li><a href="#flow"><i class="fa-solid fa-diagram-project"></i> فلوچارت اجرا</a></li>
+            <li><a href="#database"><i class="fa-solid fa-database"></i> ساختار دیتابیس</a></li>
+            <li><a href="#features"><i class="fa-solid fa-star"></i> قابلیت‌های کلیدی</a></li>
+            <li><a href="#challenges"><i class="fa-solid fa-triangle-exclamation"></i> چالش‌های حل‌شده</a></li>
+            <li><a href="#tech-stack"><i class="fa-solid fa-code"></i> تکنولوژی‌ها</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fa-solid fa-cloud-arrow-down"></i> سامانه دانلودر خودکار داده‌های حجیم USPTO</h1>
+            <p>مستندات جامع مهندسی نرم‌افزار و راهکارهای پیاده‌سازی</p>
+            
+            <div class="student-info">
+                <div><i class="fa-solid fa-user"></i> دانشجو: [نام شما]</div>
+                <div><i class="fa-solid fa-chalkboard-user"></i> استاد: [نام استاد]</div>
+                <div><i class="fa-solid fa-graduation-cap"></i> درس: [نام درس]</div>
+            </div>
+        </header>
+
+        <!-- Section 1: Overview -->
+        <section id="overview" class="card">
+            <h2><i class="fa-solid fa-circle-info"></i> ۱. معرفی و هدف پروژه</h2>
+            <p>
+                این پروژه یک ربات اتوماتیک برای استخراج و دانلود حجم عظیمی از داده‌های پتنت (اختراعات) از پورتال داده‌های باز اداره ثبت اختراعات و علائم تجاری آمریکا (USPTO) است. 
+                داده‌ها شامل میلیون‌ها فایل PDF و آرشیوهای فشرده (TAR/ZIP) هستند که به تفکیک ماه‌های سال (از سال ۲۰۰۰ تا ۲۰۲۰) دسته‌بندی شده‌اند.
+            </p>
+            <div class="alert alert-info">
+                <strong>هدف اصلی:</strong> طراحی یک سیستم مقاوم (Resilient) که بتواند بدون دخالت انسان، لاگین کند، کپچا را حل کند، فایل‌ها را پیدا کرده و به صورت ترتیبی دانلود کند؛ و در صورت قطعی اینترنت یا کرش سیستم، کار خود را از همان نقطه ادامه دهد.
+            </div>
+        </section>
+
+        <!-- Section 2: Architecture -->
+        <section id="architecture" class="card">
+            <h2><i class="fa-solid fa-sitemap"></i> ۲. معماری سیستم</h2>
+            <p>معماری این پروژه بر اساس جداسازی نگرانی‌ها (Separation of Concerns) طراحی شده است. ماژول‌های مختلف هر کدام وظیفه مشخصی دارند.</p>
+            
+            <div class="diagram-container">
+                <div class="mermaid">
+                    graph TD
+                        Runner[runner.ts<br/>نظارت و ری‌استارت خودکار] --> Main[index.ts<br/>راه‌انداز اصلی]
+                        
+                        Main --> DB[(MySQL Database)]
+                        Main --> Playwright[Playwright Browser]
+                        
+                        Playwright --> Auth[AuthService<br/>مدیریت لاگین و 2FA]
+                        Playwright --> Captcha[CaptchaService<br/>حل کپچا با OCR]
+                        
+                        Main --> Orchestrator[JobOrchestrator<br/>مدیریت چرخه کارها]
+                        
+                        Orchestrator --> Scanner[ScannerService<br/>پیمایش صفحه و استخراج لینک]
+                        Orchestrator --> Downloader[DownloadService<br/>مدیریت دانلود و کپچا]
+                        Orchestrator --> KeepAlive[KeepAliveService<br/>زنده نگه داشتن نشست]
+                        
+                        Downloader --> Monitor[DownloadMonitor<br/>پایش سرعت و کرش]
+                        
+                        classDef core fill:#2563eb,stroke:#1e40af,color:#fff;
+                        classDef service fill:#d1fae5,stroke:#10b981,color:#000;
+                        classDef db fill:#fef3c7,stroke:#f59e0b,color:#000;
+                        
+                        class Runner,Main,Orchestrator core;
+                        class Auth,Captcha,Scanner,Downloader,KeepAlive,Monitor service;
+                        class DB db;
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Flow -->
+        <section id="flow" class="card">
+            <h2><i class="fa-solid fa-diagram-project"></i> ۳. فلوچارت اجرای برنامه</h2>
+            <p>چرخه حیات برنامه از زمان روشن شدن تا دانلود کامل فایل‌ها به شرح زیر است:</p>
+            
+            <div class="diagram-container">
+                <div class="mermaid">
+                    sequenceDiagram
+                        participant R as Runner
+                        participant O as Orchestrator
+                        participant A as AuthService
+                        participant S as Scanner
+                        participant D as Downloader
+                        participant DB as Database
+
+                        R->>O: اجرای برنامه (Start)
+                        O->>DB: بررسی کارهای نیمه‌کاره (Recovery)
+                        O->>A: لاگین به USPTO
+                        A->>A: تولید کد 2FA (TOTP)
+                        A-->>O: لاگین موفق
+                        
+                        loop برای هر URL در دیتابیس
+                            O->>DB: دریافت URL با بالاترین اولویت
+                            O->>S: باز کردن صفحه URL
+                            S->>S: استخراج لیست فایل‌ها
+                            S->>DB: ثبت فایل‌ها (وضعیت: Registered)
+                            
+                            loop برای هر فایل
+                                D->>D: کلیک روی لینک دانلود
+                                D->>D: حل کپچای ریاضی (OCR)
+                                D->>D: دانلود فایل با مانیتورینگ
+                                D->>DB: ثبت وضعیت (Downloaded)
+                            end
+                            
+                            O->>DB: ثبت وضعیت URL (Downloaded)
+                        end
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Database -->
+        <section id="database" class="card">
+            <h2><i class="fa-solid fa-database"></i> ۴. ساختار دیتابیس (MySQL)</h2>
+            <p>دیتابیس نقش "مغز" برنامه را بازی می‌کند و وضعیت تمام کارها را ذخیره می‌کند تا در صورت قطعی، برنامه بتواند ادامه دهد.</p>
+            
+            <div class="grid-2">
+                <div>
+                    <h3>جدول <code>urls</code></h3>
+                    <p>ذخیره لینک‌های ماهانه USPTO. دارای ستون <code>priority</code> برای تعیین ترتیب دانلود.</p>
+                </div>
+                <div>
+                    <h3>جدول <code>files</code></h3>
+                    <p>لیست تمام فایل‌های استخراج شده از هر لینک. وضعیت‌هایی مثل <code>registered</code>، <code>downloading</code>، <code>downloaded</code> و <code>failed</code> در اینجا مدیریت می‌شوند.</p>
+                </div>
+                <div>
+                    <h3>جدول <code>accounts</code></h3>
+                    <p>اطلاعات لاگین (یوزرنیم، پسورد) و مهم‌تر از همه، سکرت کد دو مرحله‌ای (<code>2fa_secret</code>) برای ورود خودکار.</p>
+                </div>
+                <div>
+                    <h3>جدول <code>url_event_logs</code></h3>
+                    <p>ثبت تمام رویدادها و خطاها. این جدول برای دیباگ کردن بسیار حیاتی است.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Features -->
+        <section id="features" class="card">
+            <h2><i class="fa-solid fa-star"></i> ۵. قابلیت‌های کلیدی</h2>
+            
+            <ul>
+                <li><strong>ورود خودکار با 2FA (TOTP):</strong> استفاده از کتابخانه <code>otpauth</code> برای تولید کدهای ۶ رقمی از سکرت (Base32) در کسری از ثانیه.</li>
+                <li><strong>حل کپچا با OCR:</strong> استفاده از <code>Tesseract.js</code> و <code>Sharp</code> برای پردازش تصویر کپچای ریاضی USPTO (مثل ۴+۵). در صورت شکست، از اپراتور انسانی کمک می‌گیرد.</li>
+                <li><strong>مدیریت نشست (Keep-Alive):</strong> ارسال درخواست‌های دوره‌ای در پس‌زمینه (هر ۴ دقیقه) تا سرور USPTO نشست را قطع نکند.</li>
+                <li><strong>مانیتورینگ دانلود:</strong> تشخیص کرش شدن دانلود (Stall Detection) با بررسی حجم فایل در فواصل زمانی مشخص.</li>
+                <li><strong>مقاومت در برابر خطا (Runner):</strong> اسکریپت <code>runner.ts</code> به عنوان یک ناظر، در صورت کرش برنامه، پروفایل مرورگر را پاک کرده و مجدداً برنامه را اجرا می‌کند.</li>
+            </ul>
+        </section>
+
+        <!-- Section 6: Challenges -->
+        <section id="challenges" class="card">
+            <h2><i class="fa-solid fa-triangle-exclamation"></i> ۶. چالش‌های مهندسی حل‌شده</h2>
+            <p>در طول توسعه این پروژه با موانع فنی متعددی روبرو شدیم که با راهکارهای اختصاصی حل شدند:</p>
+
+            <h3>۱. خطای EINVAL در ویندوز (CVE-2024-27980)</h3>
+            <p>در نسخه‌های جدید Node.js، اجرای فایل‌های <code>.cmd</code> (مثل pnpm) با خطای امنیتی مسدود شده است. برای حل این مشکل، اسکریپت <code>runner.ts</code> به گونه‌ای بازنویسی شد که مسیر مطلق فایل اجرایی را پیدا کرده و از <code>shell: true</code> به شکل ایمن استفاده کند.</p>
+
+            <h3>۲. مسدود شدن توسط CORS و MIME Type در USPTO</h3>
+            <p>سایت USPTO از فریم‌ورک Angular استفاده می‌کند و به شدت در برابر ربات‌ها حساس است. ما با تغییر آرگومان‌های راه‌اندازی Chromium در <code>index.ts</code> (مانند <code>--disable-web-security</code> و <code>bypassCSP</code>) توانستیم محدودیت‌های Cross-Origin و همچنین خطای لود نشدن فایل‌های JS (خطای MIME) را دور بزنیم.</p>
+
+            <h3>۳. مدیریت Timeout در صفحات داینامیک</h3>
+            <p>سایت USPTO مدام در حال ارسال درخواست‌های پس‌زمینه است و حالت <code>networkidle</code> (آرامش شبکه) هرگز رخ نمی‌دهد. ما در فایل <code>AuthService.ts</code> و <code>JobOrchestrator.ts</code> از حالت <code>domcontentloaded</code> استفاده کردیم تا برنامه در تشخیص زمان لود شدن صفحه گیر نکند.</p>
+        </section>
+
+        <!-- Section 7: Tech Stack -->
+        <section id="tech-stack" class="card">
+            <h2><i class="fa-solid fa-code"></i> ۷. تکنولوژی‌های استفاده‌شده</h2>
+            
+            <div class="grid-2">
+                <div>
+                    <h3>زبان و محیط اجرا</h3>
+                    <ul>
+                        <li><span class="badge badge-success">Node.js</span> محیط اجرای سمت سرور</li>
+                        <li><span class="badge badge-success">TypeScript</span> برای تایپ‌گذاری قوی و جلوگیری از خطا</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>اتوماسیون مرورگر</h3>
+                    <ul>
+                        <li><span class="badge badge-success">Playwright</span> برای کنترل مرورگر (Chromium)</li>
+                        <li><span class="badge badge-success">Chrome Local</span> استفاده از کروم نصب‌شده روی سیستم برای پایداری بیشتر</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>داده‌ها و پردازش</h3>
+                    <ul>
+                        <li><span class="badge badge-success">MySQL 8</span> ذخیره‌سازی وضعیت و لاگ‌ها</li>
+                        <li><span class="badge badge-success">Tesseract.js</span> پردازش تصویر کپچا</li>
+                        <li><span class="badge badge-success">otpauth</span> تولید کدهای 2FA</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>ابزارهای جانبی</h3>
+                    <ul>
+                        <li><span class="badge badge-success">pnpm</span> مدیریت پکیج فوق سریع</li>
+                        <li><span class="badge badge-success">pm2</span> (در لینوکس) برای اجرای دائمی در پس‌زمینه</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    // راه‌اندازی و تنظیمات کتابخانه رسم نمودار Mermaid
+    mermaid.initialize({ 
+        startOnLoad: true, 
+        theme: 'default',
+        fontFamily: 'Vazirmatn, sans-serif',
+        flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+    });
+
+    // اسکریپت برای فعال‌سازی منو بر اساس اسکرول (Scroll Spy)
+    document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-list a");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
